@@ -1,4 +1,5 @@
 import { SignUp } from "@clerk/nextjs";
+import { Metadata } from "next";
 import React from "react";
 
 const SignUpPage = () => {
@@ -7,6 +8,10 @@ const SignUpPage = () => {
       <SignUp appearance={{ variables: { colorPrimary: "#0F172A" } }} />
     </div>
   );
+};
+
+export const metadata: Metadata = {
+  title: "SmartNotes - Sign Up",
 };
 
 export default SignUpPage;
