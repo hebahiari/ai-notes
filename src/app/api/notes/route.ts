@@ -1,5 +1,5 @@
 import prisma from "@/lib/db/prisma"
-import { createNoteSchema, updateNoteSchema } from "@/lib/validation/node"
+import { createNoteSchema, deleteNoteSchema, updateNoteSchema } from "@/lib/validation/node"
 import { auth } from "@clerk/nextjs"
 
 export async function POST(req: Request) {
@@ -69,6 +69,42 @@ export async function PUT(req: Request) {
         })
 
         return Response.json({ updatedNote }, { status: 200 })
+
+    } catch (error) {
+        console.log(error)
+        return Response.json({ error: 'Internal server error' }, { status: 500 })
+    }
+}
+
+
+export async function DELETE(req: Request) {
+    try {
+        const body = await req.json()
+        const validation = deleteNoteSchema.safeParse(body)
+
+        if (!validation.success) {
+            console.error(validation.error)
+            return Response.json({ error: 'Invalid input' }, { status: 400 })
+        }
+
+        const { id } = validation.data
+        const { userId } = auth()
+
+        // note exists
+        const note = await prisma.note.findUnique({ where: { id } })
+
+        if (!note) {
+            return Response.json({ error: 'Note not found' }, { status: 404 })
+        }
+
+        // authorized logged in user
+        if (!userId || userId !== note.userId) {
+            return Response.json({ error: 'Unauthorized' }, { status: 401 })
+        }
+
+        const updatedNote = await prisma.note.delete({ where: { id } })
+
+        return Response.json({ message: 'Note deleted' }, { status: 200 })
 
     } catch (error) {
         console.log(error)
