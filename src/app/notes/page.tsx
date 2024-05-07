@@ -1,3 +1,4 @@
+import Note from "@/components/Note";
 import prisma from "@/lib/db/prisma";
 import { auth } from "@clerk/nextjs";
 import { Metadata } from "next";
@@ -14,7 +15,14 @@ const Notes = async () => {
   })
 
   return (
-    <div></div>
+    <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+      {allNotes.map((note) => (
+        <Note note={note} key={note.id} />
+      ))}
+      {allNotes.length === 0 && (
+        <div className="col-span-full text-center">No notes yet. click the <b>Add Note</b> button to create a note.</div>
+      )}
+    </div>
   )
 };
 
