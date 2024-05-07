@@ -7,11 +7,11 @@ import { UserButton } from "@clerk/nextjs"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
 import { useState } from "react"
-import AddNoteDialog from "@/components/AddNoteDialog"
+import NoteForm from "@/components/NoteForm"
 
 const NavBar = () => {
 
-  const [showAddNoteDialog, setShowAddNoteDialog] = useState(false)
+  const [showNoteForm, setShowNoteForm] = useState(false)
 
   return (
     <>
@@ -22,7 +22,7 @@ const NavBar = () => {
             <span className="font-bold">SmartNotes</span>
           </Link>
           <div className='flex items-center gap-3'>
-            <Button onClick={() => setShowAddNoteDialog(true)}>
+            <Button onClick={() => setShowNoteForm(true)}>
               <Plus size={20} className="mr-2" />
               Add Note
             </Button>
@@ -35,7 +35,7 @@ const NavBar = () => {
           </div>
         </div>
       </div>
-      <AddNoteDialog open={showAddNoteDialog} setOpen={setShowAddNoteDialog} />
+      <NoteForm open={showNoteForm} setOpen={setShowNoteForm} />
     </>
   )
 }

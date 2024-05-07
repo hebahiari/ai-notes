@@ -8,30 +8,49 @@ import { Textarea } from './ui/textarea'
 import LoadingButton from './ui/loading-button'
 import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
+import { Note } from '@prisma/client'
 
 interface Props {
   open: boolean,
   setOpen: (open: boolean) => void,
+  noteToEdit?: Note
 }
 
-const AddNoteDialog = ({ open, setOpen }: Props) => {
+const NoteForm = ({ open, setOpen, noteToEdit }: Props) => {
 
   const router = useRouter()
 
   const form = useForm<NoteSchema>({
     resolver: zodResolver(createNoteSchema),
-    defaultValues: { title: '', content: '' }
+    defaultValues: {
+      title: noteToEdit?.title || '',
+      content: noteToEdit?.content || ''
+    }
   })
 
   async function onSubmit(input: NoteSchema) {
     try {
-      const response = await fetch('/api/notes', {
-        method: 'POST',
-        body: JSON.stringify(input)
-      })
 
-      if (!response.ok) throw Error("Status code: " + response.status)
-      form.reset()
+      if (noteToEdit) {
+        const response = await fetch('/api/notes', {
+          method: 'PUT',
+          body: JSON.stringify({
+            id: noteToEdit.id,
+            ...input
+          })
+        })
+        if (!response.ok) throw Error("Status code: " + response.status)
+
+      } else {
+        const response = await fetch('/api/notes', {
+          method: 'POST',
+          body: JSON.stringify(input)
+        })
+
+        if (!response.ok) throw Error("Status code: " + response.status)
+        form.reset()
+      }
+
       router.refresh()
       setOpen(false)
     } catch (error) {
@@ -89,4 +108,4 @@ const AddNoteDialog = ({ open, setOpen }: Props) => {
   )
 }
 
-export default AddNoteDialog
+export default NoteForm
