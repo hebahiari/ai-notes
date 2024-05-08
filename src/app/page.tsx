@@ -5,9 +5,6 @@ import Link from 'next/link'
 import { auth } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
 
-//comment
-
-
 export default function Home() {
 
   const { userId } = auth()
@@ -21,7 +18,7 @@ export default function Home() {
         <span className='font-extrabold tracking-tighter text-4xl xl:text-5xl'>SmartNotes</span>
       </div>
       <p className='text-center max-w-prose'>
-        An intellegent note-taking app with AI integration, built with OpenAi, Pinecone, Next.js, Cleck, Shadcn IO, and more.
+        An intellegent note-taking app with AI integration, built with OpenAi, Pinecone, Next.js, Clerk, Shadcn UI, and more.
       </p>
       <Button asChild>
         <Link href='/notes'>
