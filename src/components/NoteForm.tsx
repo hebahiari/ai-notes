@@ -10,6 +10,8 @@ import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { Note } from '@prisma/client'
 import { useState } from 'react'
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from './ui/alert-dialog'
+import { Button } from './ui/button'
 
 interface Props {
   open: boolean,
@@ -82,6 +84,35 @@ const NoteForm = ({ open, setOpen, noteToEdit }: Props) => {
     }
   }
 
+  const deleteDialog = (
+    <AlertDialog>
+      <AlertDialogTrigger>
+        <LoadingButton
+          loading={deleteLoading}
+          type='button'
+          variant='destructive'
+          disabled={form.formState.isSubmitting}>
+          Delete
+        </LoadingButton>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete this note.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction
+            type='button'
+            onClick={deleteNote}
+          >Continue</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+
   return (
     <>
       <Toaster />
@@ -119,23 +150,13 @@ const NoteForm = ({ open, setOpen, noteToEdit }: Props) => {
                 )}
               />
               <DialogFooter className='gap-2 sm:gap-0'>
+                {noteToEdit && deleteDialog}
                 <LoadingButton
                   type='submit'
                   loading={form.formState.isSubmitting}
                   disabled={deleteLoading}>
                   Submit
                 </LoadingButton>
-                {noteToEdit &&
-                  <LoadingButton
-                    color='red'
-                    variant='destructive'
-                    loading={deleteLoading}
-                    disabled={form.formState.isSubmitting}
-                    onClick={deleteNote}
-                    type='button'>
-                    Delete Note
-                  </LoadingButton>
-                }
               </DialogFooter>
             </form>
           </Form>
