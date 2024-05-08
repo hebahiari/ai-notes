@@ -17,7 +17,7 @@ export default function Home() {
         <Image src={logo} alt='SmartNotes' width={60} height={60} />
         <span className='font-extrabold tracking-tighter text-4xl xl:text-5xl'>SmartNotes</span>
       </div>
-      <p className='text-center max-w-prose'>
+      <p className='text-center max-w-lg'>
         An intellegent note-taking app with AI integration, built with OpenAi, Pinecone, Next.js, Clerk, Shadcn UI, and more.
       </p>
       <Button asChild>
