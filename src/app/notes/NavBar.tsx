@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
 import { useState } from "react"
 import NoteForm from "@/components/NoteForm"
+import ThemeToggleButton from "@/components/ThemeToggleButton"
 
 const NavBar = () => {
 
@@ -22,10 +23,11 @@ const NavBar = () => {
             <span className="font-bold">SmartNotes</span>
           </Link>
           <div className='flex items-center gap-3'>
-            <Button onClick={() => setShowNoteForm(true)}>
+            <Button size='sm' onClick={() => setShowNoteForm(true)}>
               <Plus size={20} className="mr-2" />
               Add Note
             </Button>
+            <ThemeToggleButton />
             <UserButton
               afterSignOutUrl="/"
               appearance={{
