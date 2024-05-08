@@ -17,7 +17,7 @@ const Note = ({ note }: Props) => {
     const time = (updatedNote ? note.updatedAt : note.createdAt).toDateString()
     return (
         <>
-            <Card className='hover:shadow-lg transition-shadow'>
+            <Card className='hover:shadow-md transition-shadow'>
                 <CardHeader>
                     <CardTitle className='flex justify-between items-start'>
                         {note.title}

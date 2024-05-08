@@ -9,6 +9,7 @@ import LoadingButton from './ui/loading-button'
 import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { Note } from '@prisma/client'
+import { useState } from 'react'
 
 interface Props {
   open: boolean,
@@ -19,6 +20,7 @@ interface Props {
 const NoteForm = ({ open, setOpen, noteToEdit }: Props) => {
 
   const router = useRouter()
+  const [deleteLoading, setDeleteLoading] = useState(false)
 
   const form = useForm<NoteSchema>({
     resolver: zodResolver(createNoteSchema),
@@ -59,13 +61,34 @@ const NoteForm = ({ open, setOpen, noteToEdit }: Props) => {
     }
   }
 
+  async function deleteNote() {
+    if (!noteToEdit) return
+    setDeleteLoading(true)
+    try {
+      const response = await fetch('api/notes', {
+        method: 'DELETE',
+        body: JSON.stringify({
+          id: noteToEdit.id
+        })
+      })
+      if (!response.ok) throw Error("Status code: " + response.status)
+      router.refresh()
+      setOpen(false)
+    } catch (error) {
+      console.log(error)
+      toast.error("Something went wrong, please try again.")
+    } finally {
+      setDeleteLoading(false)
+    }
+  }
+
   return (
     <>
       <Toaster />
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add Note</DialogTitle>
+            <DialogTitle>{noteToEdit ? 'Edit Note' : 'Add Note'}</DialogTitle>
           </DialogHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-3'>
@@ -95,10 +118,24 @@ const NoteForm = ({ open, setOpen, noteToEdit }: Props) => {
                   </FormItem>
                 )}
               />
-              <DialogFooter>
-                <LoadingButton type='submit' loading={form.formState.isSubmitting}>
+              <DialogFooter className='gap-2 sm:gap-0'>
+                <LoadingButton
+                  type='submit'
+                  loading={form.formState.isSubmitting}
+                  disabled={deleteLoading}>
                   Submit
                 </LoadingButton>
+                {noteToEdit &&
+                  <LoadingButton
+                    color='red'
+                    variant='destructive'
+                    loading={deleteLoading}
+                    disabled={form.formState.isSubmitting}
+                    onClick={deleteNote}
+                    type='button'>
+                    Delete Note
+                  </LoadingButton>
+                }
               </DialogFooter>
             </form>
           </Form>
