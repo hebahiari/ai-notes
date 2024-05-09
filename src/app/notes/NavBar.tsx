@@ -11,6 +11,7 @@ import NoteForm from "@/components/NoteForm"
 import ThemeToggleButton from "@/components/ThemeToggleButton"
 import { dark } from '@clerk/themes'
 import { useTheme } from "next-themes"
+import AIChatButton from "@/components/AIChatButton"
 
 const NavBar = () => {
 
@@ -30,6 +31,7 @@ const NavBar = () => {
               <Plus size={20} className="mr-2" />
               Add Note
             </Button>
+            <AIChatButton />
             <ThemeToggleButton />
             <UserButton
               afterSignOutUrl="/"
@@ -42,6 +44,7 @@ const NavBar = () => {
         </div>
       </div>
       <NoteForm open={showNoteForm} setOpen={setShowNoteForm} />
+
     </>
   )
 }

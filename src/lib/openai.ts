@@ -22,8 +22,6 @@ export async function getEmbedding(text: string) {
 
         if (!embedding) throw Error('Error generating embedding')
 
-        console.log(embedding)
-
         return embedding
     } catch (error) {
         console.log(error)
