@@ -64,9 +64,9 @@ const AIChatBox = ({ open, onClose }: Props) => {
                         />
                     )}
                     {!error && messages.length === 0 && (
-                        <div className='flex flex-col h-full items-start justify-start gap-1 px-3 text-gray-400 text-md' >
+                        <div className='flex flex-col h-full items-center text-center justify-start gap-1 px-3 text-gray-400 text-md' >
                             <Bot className='shrink-0 self-center mb-2' />
-                            <p>Ask a question about your notes, here are some examples:</p>
+                            <p>Ask me a question about your notes, here are some examples:</p>
                             <p>- What is my netflix password?</p>
                             <p>- Give me a movie to watch</p>
                             <p>- Summarize</p>
@@ -122,7 +122,7 @@ function ChatMessage({ message: { role, content } }: { message: Pick<Message, 'r
                 />
             )}
             <p className={cn(
-                'whitespace-pre-line rounded-lg border px-3 py-2',
+                'whitespace-pre-line break-words tex rounded-lg border px-3 py-2 max-w-sm',
                 isAIMessage ? 'bg-background' : 'bg-primary text-primary-foreground'
             )}
             >
