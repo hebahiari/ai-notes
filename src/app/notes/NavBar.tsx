@@ -22,9 +22,9 @@ const NavBar = () => {
     <>
       <div className="p-4 shadow">
         <div className="flex max-w-7xl flex-wrap items-center justify-between gap-3 m-auto max-w-7xl">
-          <Link href="/notes" className="flex items-center gap-3">
-            <Image src={logo} alt="SmartNotes" width={20} height={20} />
-            <h1 className="font-bold">SmartNotes</h1>
+          <Link href="/notes" className="flex items-center gap-2">
+            <Image src={logo} alt="SmartNotes" width={25} height={25} />
+            <h1 className="font-bold text-2xl tracking-tighter">SmartNotes</h1>
           </Link>
           <div className='flex items-center gap-3'>
             <Button size='sm' onClick={() => setShowNoteForm(true)}>

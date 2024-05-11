@@ -40,6 +40,6 @@ export default function GuestSignIn({ guestEmail, guestPassword }: Props) {
     };
 
     return (
-        <div className='cursor-pointer text-gray-600' onClick={handleSubmit}>Try as a guest user</div>
+        <div className='cursor-pointer text-gray-600' onClick={handleSubmit}>Test as a guest user</div>
     );
 }
