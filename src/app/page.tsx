@@ -4,12 +4,16 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { auth } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
+import GuestSignIn from '@/components/GuestSignIn'
 
 export default function Home() {
 
   const { userId } = auth()
 
   if (userId) redirect('/notes')
+
+  const guestUserEmail = process.env.GUEST_USER_EMAIL
+  const guestUserPassword = process.env.GUEST_USER_PASSWORD
 
   return (
     <main className='flex flex-col h-screen items-center justify-center gap-5'>
@@ -22,9 +26,10 @@ export default function Home() {
       </p>
       <Button asChild>
         <Link href='/notes'>
-          Try Now!
+          Sign Up
         </Link>
       </Button>
+      {guestUserEmail && guestUserPassword && <GuestSignIn guestEmail={guestUserEmail} guestPassword={guestUserPassword} />}
     </main>
   )
 }
