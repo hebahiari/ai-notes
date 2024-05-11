@@ -24,7 +24,7 @@ const NavBar = () => {
         <div className="flex max-w-7xl flex-wrap items-center justify-between gap-3">
           <Link href="/notes" className="flex items-center gap-3">
             <Image src={logo} alt="SmartNotes" width={20} height={20} />
-            <span className="font-bold">SmartNotes</span>
+            <h1 className="font-bold">SmartNotes</h1>
           </Link>
           <div className='flex items-center gap-3'>
             <Button size='sm' onClick={() => setShowNoteForm(true)}>
