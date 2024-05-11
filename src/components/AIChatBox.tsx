@@ -66,10 +66,13 @@ const AIChatBox = ({ open, onClose }: Props) => {
                     {!error && messages.length === 0 && (
                         <div className='flex flex-col h-full items-center text-center justify-start gap-1 px-3 text-gray-400 text-md' >
                             <Bot className='shrink-0 self-center mb-2' />
-                            <p>Ask me a question about your notes, here are some examples:</p>
-                            <p>- What is my netflix password?</p>
-                            <p>- Give me a movie to watch</p>
-                            <p>- Summarize (article name)</p>
+                            <p className='whitespace-pre-line'>Ask me a question about your notes,<br />
+                                here are some examples:<br />
+                                <br />
+                                - What is my netflix password?<br />
+                                - Give me a movie to watch<br />
+                                - Summarize (article name)
+                            </p>
                         </div>
                     )}
                 </div>
