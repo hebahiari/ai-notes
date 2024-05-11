@@ -42,9 +42,13 @@ const NoteDetails = ({ open, setOpen, setOpenEdit, note }: Props) => {
             if (!response.ok) throw Error("Status code: " + response.status)
             router.refresh()
             setOpen(false)
-        } catch (error) {
+        } catch (error: any) {
             console.log(error)
-            toast.error("Something went wrong, please try again.")
+            if (error.message === 'Status code: 401') {
+                toast.error("Changes were not saved, please log in to perform this action.")
+            } else {
+                toast.error("Changes could not be saved.")
+            }
         } finally {
             setDeleteLoading(false)
         }
