@@ -1,18 +1,31 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog'
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from './ui/dialog'
 import LoadingButton from './ui/loading-button'
 import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { Note } from '@prisma/client'
 import { useState } from 'react'
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from './ui/alert-dialog'
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger
+} from './ui/alert-dialog'
+import { Trash } from 'lucide-react'
+import { Button } from './ui/button'
 
 interface Props {
     open: boolean,
     setOpen: (open: boolean) => void,
+    setOpenEdit: (open: boolean) => void,
     note: Note
 }
 
-const NoteDisplay = ({ open, setOpen, note }: Props) => {
+const NoteDetails = ({ open, setOpen, setOpenEdit, note }: Props) => {
 
     const router = useRouter()
     const [deleteLoading, setDeleteLoading] = useState(false)
@@ -73,11 +86,18 @@ const NoteDisplay = ({ open, setOpen, note }: Props) => {
                     <DialogHeader>
                         <DialogTitle>{note.title}</DialogTitle>
                     </DialogHeader>
-                    <p>{note.content}</p>
+                    <p className='whitespace-pre-line break-words'>{note.content}</p>
+                    <DialogFooter>
+                        {deleteDialog}
+                        <Button onClick={() => {
+                            setOpen(false)
+                            setOpenEdit(true)
+                        }}>Edit</Button>
+                    </DialogFooter>
                 </DialogContent>
             </Dialog>
         </>
     )
 }
 
-export default NoteDisplay
+export default NoteDetails
