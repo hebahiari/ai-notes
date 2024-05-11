@@ -60,8 +60,8 @@ const NoteDetails = ({ open, setOpen, setOpenEdit, note }: Props) => {
                 <LoadingButton
                     loading={deleteLoading}
                     type='button'
-                    variant='destructive'>
-                    Delete
+                    variant='outline'>
+                    <Trash />
                 </LoadingButton>
             </AlertDialogTrigger>
             <AlertDialogContent>
