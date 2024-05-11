@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/
 import { useState } from "react"
 import NoteForm from "./NoteForm"
 import { Edit } from "lucide-react"
+import NoteDisplay from "./NoteDisplay"
 
 interface Props {
     note: NoteModel
@@ -12,16 +13,21 @@ interface Props {
 const Note = ({ note }: Props) => {
 
     const [showNoteForm, setShowNoteForm] = useState(false)
+    const [showNoteDetails, setShowNoteDetails] = useState(false)
 
     const updatedNote = note.updatedAt > note.createdAt
     const time = (updatedNote ? note.updatedAt : note.createdAt).toDateString()
+
     return (
-        <>
-            <Card className='hover:shadow-md transition-shadow'>
+        <div className='cursor-pointer'>
+            <Card className='hover:shadow-md transition-shadow max-h-96 overflow-y-auto' onClick={() => setShowNoteDetails(true)}>
                 <CardHeader>
                     <CardTitle className='flex justify-between items-start'>
                         {note.title}
-                        <button onClick={() => setShowNoteForm(true)}>
+                        <button onClick={(event) => {
+                            event.stopPropagation();
+                            setShowNoteForm(true)
+                        }}>
                             <Edit color='grey' height={15} />
                         </button>
                     </CardTitle>
@@ -31,14 +37,19 @@ const Note = ({ note }: Props) => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <p className="whitespace-pre-line">{note.content}</p>
+                    <p className="whitespace-pre-line break-words">{note.content}</p>
                 </CardContent>
             </Card>
             <NoteForm
                 open={showNoteForm}
                 noteToEdit={note}
                 setOpen={setShowNoteForm} />
-        </>
+            <NoteDisplay
+                open={showNoteDetails}
+                note={note}
+                setOpen={setShowNoteDetails}
+            />
+        </div>
     )
 }
 
