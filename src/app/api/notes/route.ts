@@ -6,6 +6,12 @@ import { auth } from "@clerk/nextjs"
 
 export async function POST(req: Request) {
     try {
+        const { userId } = auth()
+
+        if (userId === 'user_2gKcQJfvLB3w0F62yylesv8Yzsv') {
+            return Response.json({ error: 'Unauthorized' }, { status: 401 })
+        }
+
         const body = await req.json()
         const validation = createNoteSchema.safeParse(body)
 
@@ -15,7 +21,6 @@ export async function POST(req: Request) {
         }
 
         const { title, content } = validation.data
-        const { userId } = auth()
 
         if (!userId) {
             return Response.json({ error: 'Unauthorized' }, { status: 401 })
@@ -55,6 +60,12 @@ export async function POST(req: Request) {
 
 export async function PUT(req: Request) {
     try {
+        const { userId } = auth()
+
+        if (userId === 'user_2gKcQJfvLB3w0F62yylesv8Yzsv') {
+            return Response.json({ error: 'Unauthorized' }, { status: 401 })
+        }
+
         const body = await req.json()
         const validation = updateNoteSchema.safeParse(body)
 
@@ -64,7 +75,6 @@ export async function PUT(req: Request) {
         }
 
         const { id, title, content } = validation.data
-        const { userId } = auth()
 
         // note exists
         const note = await prisma.note.findUnique({ where: { id } })
@@ -113,6 +123,13 @@ export async function PUT(req: Request) {
 
 export async function DELETE(req: Request) {
     try {
+
+        const { userId } = auth()
+
+        if (userId === 'user_2gKcQJfvLB3w0F62yylesv8Yzsv') {
+            return Response.json({ error: 'Unauthorized' }, { status: 401 })
+        }
+
         const body = await req.json()
         const validation = deleteNoteSchema.safeParse(body)
 
@@ -122,7 +139,6 @@ export async function DELETE(req: Request) {
         }
 
         const { id } = validation.data
-        const { userId } = auth()
 
         // note exists
         const note = await prisma.note.findUnique({ where: { id } })
