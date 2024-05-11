@@ -69,7 +69,7 @@ const AIChatBox = ({ open, onClose }: Props) => {
                             <p>Ask me a question about your notes, here are some examples:</p>
                             <p>- What is my netflix password?</p>
                             <p>- Give me a movie to watch</p>
-                            <p>- Summarize</p>
+                            <p>- Summarize (article name)</p>
                         </div>
                     )}
                 </div>
