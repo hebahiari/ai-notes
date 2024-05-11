@@ -143,7 +143,7 @@ const NoteForm = ({ open, setOpen, noteToEdit }: Props) => {
                   <FormItem>
                     <FormLabel>Note Content</FormLabel>
                     <FormControl>
-                      <Textarea placeholder='Enter your note content' {...field} />
+                      <Textarea placeholder='Enter your note content' rows={10} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

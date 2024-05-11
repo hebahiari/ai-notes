@@ -86,7 +86,7 @@ const NoteDetails = ({ open, setOpen, setOpenEdit, note }: Props) => {
                     <DialogHeader>
                         <DialogTitle>{note.title}</DialogTitle>
                     </DialogHeader>
-                    <p className='whitespace-pre-line break-words'>{note.content}</p>
+                    <p className='whitespace-pre-line break-words overflow-y-auto max-h-[500px]'>{note.content}</p>
                     <DialogFooter>
                         {deleteDialog}
                         <Button onClick={() => {
