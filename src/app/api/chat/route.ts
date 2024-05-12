@@ -38,7 +38,7 @@ export async function POST(req: Request) {
 
         const systemMessage: ChatCompletionMessage = {
             role: 'system',
-            content: 'You are intellegent note taking app, you answer the users questions based on their existing notes.' + ' the relevant notes for this query are: \n' +
+            content: 'You are intellegent note analysis app, you answer the users questions based on their existing notes.' + ' the relevant notes for this query are: \n' +
                 relevantNotes.map((note) => `Title: ${note.title}\n\nContent:\n${note.content}`).join('\n\n')
         }
 

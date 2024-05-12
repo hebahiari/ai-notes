@@ -1,3 +1,4 @@
+import AddNote from "@/components/AddNote";
 import Note from "@/components/Note";
 import prisma from "@/lib/db/prisma";
 import { auth } from "@clerk/nextjs";
@@ -20,7 +21,7 @@ const Notes = async () => {
         <Note note={note} key={note.id} />
       ))}
       {allNotes.length === 0 && (
-        <div className="col-span-full text-center">No notes yet. click the <b>Add Note</b> button to create a note.</div>
+        <div className="col-span-full text-center mt-5">No notes yet. <AddNote type='text' /> to get started.</div>
       )}
     </div>
   )

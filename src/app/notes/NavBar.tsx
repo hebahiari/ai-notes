@@ -12,25 +12,22 @@ import ThemeToggleButton from "@/components/ThemeToggleButton"
 import { dark } from '@clerk/themes'
 import { useTheme } from "next-themes"
 import AIChatButton from "@/components/AIChatButton"
+import AddNote from "@/components/AddNote"
 
 const NavBar = () => {
 
   const { theme } = useTheme()
-  const [showNoteForm, setShowNoteForm] = useState(false)
 
   return (
     <>
       <div className="p-4 shadow">
-        <div className="flex max-w-7xl flex-wrap items-center justify-between gap-3 m-auto max-w-7xl">
+        <div className="flex flex-wrap items-center justify-between gap-3 m-auto max-w-7xl">
           <Link href="/notes" className="flex items-center gap-2">
             <Image src={logo} alt="SmartNotes" width={25} height={25} />
             <h1 className="font-bold text-2xl tracking-tighter">SmartNotes</h1>
           </Link>
           <div className='flex items-center gap-3'>
-            <Button size='sm' onClick={() => setShowNoteForm(true)}>
-              <Plus size={20} className="mr-2" />
-              Add Note
-            </Button>
+            <AddNote type='button' />
             <AIChatButton />
             <ThemeToggleButton />
             <UserButton
@@ -43,7 +40,6 @@ const NavBar = () => {
           </div>
         </div>
       </div>
-      <NoteForm open={showNoteForm} setOpen={setShowNoteForm} />
 
     </>
   )
