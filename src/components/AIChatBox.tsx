@@ -71,7 +71,8 @@ const AIChatBox = ({ open, onClose }: Props) => {
                                 <br />
                                 - What is my netflix password?<br />
                                 - Give me a movie to watch<br />
-                                - Summarize (article name)
+                                - Summarize (article name)<br />
+                                - Do I have any upcoming events?
                             </p>
                         </div>
                     )}

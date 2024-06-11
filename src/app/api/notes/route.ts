@@ -3,6 +3,8 @@ import prisma from "@/lib/db/prisma"
 import { getEmbedding } from "@/lib/openai"
 import { createNoteSchema, deleteNoteSchema, updateNoteSchema } from "@/lib/validation/node"
 import { auth } from "@clerk/nextjs"
+import { NextApiRequest, NextApiResponse } from 'next';
+
 
 export async function POST(req: Request) {
     try {
@@ -120,7 +122,6 @@ export async function PUT(req: Request) {
     }
 }
 
-
 export async function DELETE(req: Request) {
     try {
 
@@ -169,4 +170,51 @@ export async function DELETE(req: Request) {
 
 async function getEmbeddingForNote(title: string, content: string | undefined) {
     return getEmbedding(title + '\n\n' + content ?? '')
+}
+
+
+export async function GET(req: Request) {
+    try {
+        const { userId } = auth();
+
+        if (!userId) {
+            return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
+        }
+
+        const url = new URL(req.url);
+        const search = url.searchParams.get('search');
+
+        console.log(search)
+
+        if (!search || search.trim().length === 0) {
+            return new Response(JSON.stringify({ error: 'Invalid search parameter' }), { status: 400 });
+        }
+
+        console.log({ search })
+
+        const notes = await prisma.note.findMany({
+            where: {
+                userId: userId,
+                OR: [
+                    {
+                        title: {
+                            contains: search,
+                            mode: 'insensitive',
+                        },
+                    },
+                    {
+                        content: {
+                            contains: search,
+                            mode: 'insensitive',
+                        },
+                    },
+                ],
+            },
+        });
+
+        return new Response(JSON.stringify(notes), { status: 200 });
+    } catch (error) {
+        console.error(error);
+        return new Response(JSON.stringify({ error: 'Internal server error' }), { status: 500 });
+    }
 }

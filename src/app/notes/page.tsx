@@ -1,5 +1,6 @@
 import AddNote from "@/components/AddNote";
 import Note from "@/components/Note";
+import SearchBar from "@/components/SearchBar";
 import prisma from "@/lib/db/prisma";
 import { auth } from "@clerk/nextjs";
 import { Metadata } from "next";
@@ -17,6 +18,7 @@ const Notes = async () => {
 
   return (
     <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+      <SearchBar />
       {allNotes.map((note) => (
         <Note note={note} key={note.id} />
       ))}
