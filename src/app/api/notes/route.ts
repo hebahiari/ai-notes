@@ -190,7 +190,6 @@ export async function GET(req: Request) {
             return new Response(JSON.stringify({ error: 'Invalid search parameter' }), { status: 400 });
         }
 
-        console.log({ search })
 
         const notes = await prisma.note.findMany({
             where: {

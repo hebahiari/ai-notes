@@ -23,7 +23,11 @@ const Notes = async () => {
         <Note note={note} key={note.id} />
       ))}
       {allNotes.length === 0 && (
-        <div className="col-span-full text-center mt-5">No notes yet. <AddNote type='text' /> to get started.</div>
+        <div className="col-span-full text-center mt-5">
+          No notes yet.
+          <AddNote type='text' />
+          to get started.
+        </div>
       )}
     </div>
   )
