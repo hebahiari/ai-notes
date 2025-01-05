@@ -22,13 +22,13 @@ const Notes = async () => {
       {allNotes.map((note) => (
         <Note note={note} key={note.id} />
       ))}
-      {allNotes.length === 0 && (
+      {/* {allNotes.length === 0 && (
         <div className="col-span-full text-center mt-5">
           No notes yet.
           <AddNote type='text' />
           to get started.
         </div>
-      )}
+      )} */}
     </div>
   )
 };
